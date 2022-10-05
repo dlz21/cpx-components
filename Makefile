@@ -11,7 +11,7 @@ build: ## Build the cpx-components test image
 	podman build -t $(IMAGE_TAG) -f Containerfile.test .
 	@mkdir -p node_modules
 	podman create --name node_modules_copy $(IMAGE_TAG)
-	podman cp node_modules_copy:/usr/src/app/node_modules node_modules
+	podman cp node_modules_copy:/usr/src/app/node_modules .
 	podman rm node_modules_copy
 
 CONTAINER_NAME = cpx-components_dev
@@ -30,7 +30,7 @@ stop: ## Stop and remove the service container
 
 npm: ## Exec `npm install` in the container and copy out files
 	podman exec -u 0 $(CONTAINER_NAME) npm install
-	podman cp $(CONTAINER_NAME):/usr/src/app/node_modules node_modules
+	podman cp $(CONTAINER_NAME):/usr/src/app/node_modules .
 
 test: ## Exec `deno task test` in the container
 	podman exec $(CONTAINER_NAME) deno task test
