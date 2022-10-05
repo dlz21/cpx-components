@@ -20,7 +20,7 @@ CONTAINER_NAME = cpx-components_dev
 start: ## Run the dev service
 	podman run -d \
 		-v ./:/usr/src/app \
-		-v NodeModuels:/usr/src/app/node_modules \
+		-v NodeModules:/usr/src/app/node_modules \
 		-p 8080:8080 \
 		--name $(CONTAINER_NAME) $(IMAGE_TAG)
 	podman ps
