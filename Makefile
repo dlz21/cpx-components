@@ -5,7 +5,6 @@ default: help
 help: ## Display this help
 	@awk 'BEGIN {FS = ":.*##"; printf "\nUsage:\n  make \033[36m<target>\033[0m\n\nTargets:\n"} /^[a-zA-Z0-9_-]+:.*?##/ { printf "  \033[36m%-10s\033[0m %s\n", $$1, $$2 }' $(MAKEFILE_LIST)
 
-IMAGE = cpx-components
 IMAGE_TAG = cpx-components:dev
 
 build: ## Build the cpx-components test image
@@ -40,4 +39,4 @@ test-watch: ## Exec `deno task test:watch` in the container
 	podman exec -it $(CONTAINER_NAME) deno task test:watch
 
 clean:
-	podman rmi $(IMAGE_TAG) $(IMAGE)
+	podman rmi $(IMAGE_TAG)
