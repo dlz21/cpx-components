@@ -33,7 +33,13 @@ npm: ## Exec `npm install` in the container and copy out files
 	podman cp $(CONTAINER_NAME):/usr/src/app/node_modules .
 
 build-components: ## Build components
-	podman exec -u 0 $(CONTAINER_NAME) deno task build
+	@echo Building components
+	podman run -it --rm --user 0 \
+		-v ./:/usr/src/app \
+		-p 8080:8080  \
+		$(IMAGE_TAG) \
+		make build-components -C components
+
 
 test: ## Exec `deno task test` in the container
 	podman exec $(CONTAINER_NAME) deno task test
